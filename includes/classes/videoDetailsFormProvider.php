@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class videoDetailsFormProvider {
 
@@ -15,12 +15,14 @@ class videoDetailsFormProvider {
         $descriptionInput =  $this -> createDescriptionInput(); 
         $dropDown = $this -> createPrivacy();
         $catagoriesInput = $this -> createCategoriesInput($config);
+        $submitButton = $this -> createUploadButton();
          return "<form action='processing.php' method='POST'> 
             $fileInput
             $titleInput
             $descriptionInput
             $dropDown
             $catagoriesInput
+            $submitButton
          </form>";
     }
 
@@ -80,6 +82,10 @@ class videoDetailsFormProvider {
 
             return $html;
         }
+
+    private function createUploadButton() {
+        return "<button type='submit' class='btn btn-primary' name='uploadButton'> Upload </button>";
+    }
 } 
 
 ?>
