@@ -1,11 +1,20 @@
 <?php 
+
 class videoDetailsFormProvider {
+
+    // declared config variable inside the videoDetailsFormProvider class
+    private $config;
+
+    public function __construct($config) {
+        $this->config = $config;
+    }
     
     public function createUpload() {
         $fileInput = $this -> createFileInput();
         $titleInput = $this -> createTitleInput();
         $descriptionInput =  $this -> createDescriptionInput(); 
         $dropDown = $this -> createPrivacy();
+        $catagoriesInput = $this -> createCategoriesInput($config);
          return "<form action='processing.php' method='POST'> 
             $fileInput
             $titleInput
@@ -47,5 +56,17 @@ class videoDetailsFormProvider {
       </select>
         </div>";
     }
+
+    private function createCategoriesInput($config) {
+        // getting data from categories table
+        $catagory = $this->config->prepare("SELECT * FROM categories");
+        $catagory -> execute();
+
+        // looping through database of categories then printing the data we've looped through
+        while ($row = $catagory->fetch(PDO::FETCH_ASSOC)) {
+            echo $row["name"] . "<br>"; 
+            }
+        }
 }
+
 ?>
