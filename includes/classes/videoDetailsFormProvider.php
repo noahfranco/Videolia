@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class videoDetailsFormProvider {
 
@@ -15,11 +15,14 @@ class videoDetailsFormProvider {
         $descriptionInput =  $this -> createDescriptionInput(); 
         $dropDown = $this -> createPrivacy();
         $catagoriesInput = $this -> createCategoriesInput($config);
+        $submitButton = $this -> createUploadButton();
          return "<form action='processing.php' method='POST'> 
             $fileInput
             $titleInput
             $descriptionInput
             $dropDown
+            $catagoriesInput
+            $submitButton
          </form>";
     }
 
@@ -50,7 +53,7 @@ class videoDetailsFormProvider {
     private function createPrivacy() {
         return "<div class='form-group'> 
             <select class='custom-select' name='privacyInput'>
-                <option selected>Choose...</option>
+                <option> Choose... </option>
                 <option value='0'> Private </option>
                 <option value='1'> Public </option>
       </select>
@@ -63,10 +66,26 @@ class videoDetailsFormProvider {
         $catagory -> execute();
 
         // looping through database of categories then printing the data we've looped through
+
+        $html = "<div class='form-group'> 
+        <select class='custom-select' name='privacyInput'>";
+
         while ($row = $catagory->fetch(PDO::FETCH_ASSOC)) {
-            echo $row["name"] . "<br>"; 
+            $name =  $row["name"]; 
+            $id = $row["id"];
+
+            // the . is used to concatenate to string together
+            $html .= "<option value='$id'> $name </option>";
             }
+
+            $html .= "</select> </div>";
+
+            return $html;
         }
-}
+
+    private function createUploadButton() {
+        return "<button type='submit' class='btn btn-primary' name='uploadButton'> Upload </button>";
+    }
+} 
 
 ?>
